@@ -1,4 +1,5 @@
 ﻿using IdentityModel;
+using IdentityServer4;
 using IdentityServer4.Models;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,8 @@ namespace Identity.API.Config
         public static IEnumerable<IdentityResource> Ids =>
                     new IdentityResource[]
                     {
-                new IdentityResources.OpenId(),
-                new IdentityResources.Profile(),
+                        new IdentityResources.OpenId(),
+                        new IdentityResources.Profile(),
                     };
 
 
@@ -27,6 +28,27 @@ namespace Identity.API.Config
         public static IEnumerable<Client> Clients =>
             new Client[]
             {
+                new Client {
+                    ClientId="vuejsclient",
+                    ClientName = "vuejsclientName",
+                    ClientUri="http://localhost:9527",
+                    AllowedGrantTypes = GrantTypes.Implicit,
+                    AllowAccessTokensViaBrowser = true,
+                    RequireConsent = true,//??
+                    RedirectUris ={
+                        "http://localhost:9527/signin-oidc"
+                    },
+                    AllowedCorsOrigins={
+                        "http://localhost:9527",
+                        "http://localhost:9527/"
+                    },
+                    AllowedScopes =
+                    {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        "api1","api2"
+                      }
+                },
                 // client credentials flow client
                 new Client
                 {
